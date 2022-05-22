@@ -1,0 +1,78 @@
+/** @format */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #148aff;
+  --primary-color-dark: #05416b;
+
+  --secondary-color: #ff7300;
+  --secondary-color-light: #fadd05;
+
+  --heading-black-color: #282828;
+
+  --normal-text-color: #656969;
+
+  --white-color: #fff;
+
+  --white-color-dark: #d9d9d9;
+
+  --gray-color:#a1a3a6;
+  --gray-color-dark:#a1a3a6;
+
+
+  --black-color: #0d0d0d;
+}
+
+/* Color Theme Swatches in Hex */
+.CSEND-/-SILENCE-1-hex {
+  color: #a1a3a6;
+}
+.CSEND-/-SILENCE-2-hex {
+  color: #595857;
+}
+.CSEND-/-SILENCE-3-hex {
+  color: #f2f2f2;
+}
+.CSEND-/-SILENCE-4-hex {
+  color: #d9d9d9;
+}
+.CSEND-/-SILENCE-5-hex {
+  color: #0d0d0d;
+}
+
+/* Color Theme Swatches in RGBA */
+.CSEND-/-SILENCE-1-rgba {
+  color: rgba(160, 162, 165, 1);
+}
+.CSEND-/-SILENCE-2-rgba {
+  color: rgba(89, 88, 86, 1);
+}
+.CSEND-/-SILENCE-3-rgba {
+  color: rgba(242, 242, 242, 1);
+}
+.CSEND-/-SILENCE-4-rgba {
+  color: rgba(216, 216, 216, 1);
+}
+.CSEND-/-SILENCE-5-rgba {
+  color: rgba(12, 12, 12, 1);
+}
+
+/* Color Theme Swatches in HSLA */
+.CSEND-/-SILENCE-1-hsla {
+  color: hsla(213, 2, 64, 1);
+}
+.CSEND-/-SILENCE-2-hsla {
+  color: hsla(39, 1, 34, 1);
+}
+.CSEND-/-SILENCE-3-hsla {
+  color: hsla(0, 0, 95, 1);
+}
+.CSEND-/-SILENCE-4-hsla {
+  color: hsla(0, 0, 85, 1);
+}
+.CSEND-/-SILENCE-5-hsla {
+  color: hsla(0, 0, 5, 1);
+}

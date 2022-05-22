@@ -1,0 +1,68 @@
+/** @format */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #148aff;
+  --primary-color-dark: #05416b;
+
+  --secondary-color: #ff7300;
+  --secondary-color-light: #fadd05;
+
+  --heading-black-color: #282828;
+
+  --normal-text-color: #656969;
+}
+
+/* Color Theme Swatches in Hex */
+.Joybooks-1-hex {
+  color: #05416b;
+}
+.Joybooks-2-hex {
+  color: #fadd05;
+}
+.Joybooks-3-hex {
+  color: #148aff;
+}
+.Joybooks-4-hex {
+  color: #ff7300;
+}
+.Joybooks-5-hex {
+  color: #ffffff;
+}
+
+/* Color Theme Swatches in RGBA */
+.Joybooks-1-rgba {
+  color: rgba(5, 64, 107, 1);
+}
+.Joybooks-2-rgba {
+  color: rgba(249, 221, 4, 1);
+}
+.Joybooks-3-rgba {
+  color: rgba(20, 137, 255, 1);
+}
+.Joybooks-4-rgba {
+  color: rgba(255, 114, 0, 1);
+}
+.Joybooks-5-rgba {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* Color Theme Swatches in HSLA */
+.Joybooks-1-hsla {
+  color: hsla(204, 90, 22, 1);
+}
+.Joybooks-2-hsla {
+  color: hsla(52, 96, 49, 1);
+}
+.Joybooks-3-hsla {
+  color: hsla(209, 100, 54, 1);
+}
+.Joybooks-4-hsla {
+  color: hsla(27, 100, 50, 1);
+}
+.Joybooks-5-hsla {
+  color: hsla(0, 0, 100, 1);
+}

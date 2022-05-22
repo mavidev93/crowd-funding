@@ -1,0 +1,40 @@
+/** @format */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #148aff;
+  --primary-color-dark: #05416b;
+
+  --secondary-color: #ff7300;
+  --secondary-color-light: #fadd05;
+
+  --heading-black-color: #282828;
+
+  --normal-text-color: #656969;
+}
+
+
+
+/* Color Theme Swatches in Hex */
+.dhc-logo-with-text-1-hex { color: #F2F2F2; }
+.dhc-logo-with-text-2-hex { color: #A6A6A6; }
+.dhc-logo-with-text-3-hex { color: #737373; }
+.dhc-logo-with-text-4-hex { color: #404040; }
+.dhc-logo-with-text-5-hex { color: #0D0D0D; }
+
+/* Color Theme Swatches in RGBA */
+.dhc-logo-with-text-1-rgba { color: rgba(242, 242, 242, 1); }
+.dhc-logo-with-text-2-rgba { color: rgba(165, 165, 165, 1); }
+.dhc-logo-with-text-3-rgba { color: rgba(114, 114, 114, 1); }
+.dhc-logo-with-text-4-rgba { color: rgba(63, 63, 63, 1); }
+.dhc-logo-with-text-5-rgba { color: rgba(13, 13, 13, 1); }
+
+/* Color Theme Swatches in HSLA */
+.dhc-logo-with-text-1-hsla { color: hsla(0, 0, 94, 1); }
+.dhc-logo-with-text-2-hsla { color: hsla(0, 0, 65, 1); }
+.dhc-logo-with-text-3-hsla { color: hsla(0, 0, 45, 1); }
+.dhc-logo-with-text-4-hsla { color: hsla(0, 0, 25, 1); }
+.dhc-logo-with-text-5-hsla { color: hsla(0, 0, 5, 1); }
