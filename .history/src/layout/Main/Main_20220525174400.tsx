@@ -1,0 +1,21 @@
+/** @format */
+
+//Application
+import MainTitle from "./MainTitle";
+import Showcase from "../../features/showcase/Showcase";
+import HottestProjects from "../../features/HottestProjects/HottestProjects";
+import FeaturesCarousel from "../../features/featuresCarousel/FeaturesCarousel";
+import NewestProjects from "../../features/NewestProjects/NewestProjects";
+function Main() {
+  return (
+    <section className="mx-auto px-3 md:max-w-screen-xl ">
+      <MainTitle />
+      <Showcase />
+      <HottestProjects />
+      <FeaturesCarousel  />
+      <NewestProjects/>
+    </section>
+  );
+}
+
+export default Main;
