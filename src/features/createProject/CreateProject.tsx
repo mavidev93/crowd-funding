@@ -3,60 +3,138 @@
 import { useState, useEffect } from "react";
 
 //Third party
+import { Moralis } from "moralis";
 import {
   Formik,
   Form,
-  useField,
-  FieldProps,
-  FieldHookConfig,
   Field,
 } from "formik";
 import * as Yup from "yup";
-import { create } from "ipfs-http-client";
-import axios from "axios";
 import { useMoralis, useMoralisFile } from "react-moralis";
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 
 //App
-import TextInput from "../../components/TextInput/TextInput";
 import Textarea from "../../components/Textarea/Textarea";
 import CommonButton from "../../components/CommonButton/CommonButton";
-import { ConnectButton,useNotification } from "web3uikit";
+import { ConnectButton, useNotification } from "web3uikit";
 import ImageCrop from "../../components/ImageCrop/ImageCrop";
-const client = create({ url: "https://ipfs.infura.io:5001/api/v0" });
+import TextInput from "../../components/TextInput/TextInput";
+import CustomLinerProgress from "../../components/LinerProgress/LinerProgress/CustomLinerProgress";
+
+const ethers = Moralis.web3Library;
+
+//validators
+function validateEthereumAddress(value: any) {
+  console.log(value);
+  let error;
+  if (!value) {
+    error = "Required!";
+  } else if (!ethers.utils.isAddress(value)) {
+    error = "invalid address!";
+  }
+  return error;
+}
 
 //Component
 const CreateProject = () => {
-
   //States
-  // const [file, setFile] = useState<any>("");
-  const [preview, setPreview] = useState<null | string>(null);
   const [imgSrc, setImgSrc] = useState<null | string>(null);
-  const [imgSrcAvatar,setImgSrcAvatar]= useState<null|string>(null)
+  const [imgSrcAvatar, setImgSrcAvatar] = useState<null | string>(null);
+  const [imgCanvas, setImgCanvas] = useState<HTMLCanvasElement | null>(null);
+  const [imgAvatarCanvas, setImgAvatarCanvas] =
+    useState<HTMLCanvasElement | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   //Hooks
   const { Moralis, authenticate, isAuthenticated, user } = useMoralis();
   // const { error, isUploading, moralisFile, saveFile } = useMoralisFile();
-  const dispatchNotification = useNotification()
+  const dispatchNotification = useNotification();
 
   //Handlers
-  const test = async () => {
-    const data = (
-      await axios.get(
-        "https://ipfs.moralis.io:2053/ipfs/QmbdFKJ2ZnraqMxz7Fvd4B6CQQeV9mgo41aLQrgLm2pnrx"
-      )
-    ).data;
-    console.log(`${data.key} is beutiful`);
-  };
 
-  const handleSubmit = async () => {
-    const object = {
-      key: "abdolreza",
+  const handleSubmit = async (values: any,actions:any) => {
+    setIsLoading(true);
+    let headerImgUrl = "";
+    let avatarImgUrl = "";
+    const imgDataUrl = imgCanvas?.toDataURL();
+    const avatarDataUrl = imgAvatarCanvas?.toDataURL();
+
+    if (imgDataUrl) {
+      try {
+        const file = new Moralis.File("data url", { base64: imgDataUrl });
+        const response = await file.saveIPFS();
+        console.log(response?._url);
+        headerImgUrl = response?._url;
+      } catch {
+        setIsLoading(false);
+
+        dispatchNotification({
+          message: "Problem In Sending Header Image!",
+          type: "error",
+          position: "topR",
+        });
+        return;
+      }
+    }
+    if (avatarDataUrl) {
+      try {
+        const file = new Moralis.File("data url", { base64: avatarDataUrl });
+        const response = await file.saveIPFS();
+        console.log(response?._url);
+        avatarImgUrl = response?._url;
+      } catch {
+        setIsLoading(false);
+        dispatchNotification({
+          message: "Problem In Sending Avatar Image!",
+          type: "error",
+          position: "topR",
+        });
+        return;
+      }
+    }
+
+    const {
+      creator,
+      proposal,
+      walletAddress,
+      projectImgUrl,
+      projectAvatarUrl,
+      fundAmount,
+    } = values;
+
+    const dataObject = {
+      creator,
+      proposal,
+      walletAddress,
+      projectImgUrl,
+      projectAvatarUrl,
+      fundAmount,
+      headerImgUrl,
+      avatarImgUrl,
     };
-    const file = new Moralis.File("file.json", {
-      base64: btoa(JSON.stringify(object)),
+
+    const dataFile = new Moralis.File("data Object", {
+      base64: btoa(JSON.stringify(dataObject)),
     });
-    const response = await file.saveIPFS();
-    console.log(response);
+    try {
+      const response = await dataFile.saveIPFS();
+      actions.resetForm()
+      dispatchNotification({
+        message: "Project Created Succesfully!",
+        type: "success",
+        position: "topR",
+      });
+      //TODO: send date to contract and then redirect to single project
+      
+    } catch {
+      dispatchNotification({
+        message: "Project Creattion Failed",
+        type: "error",
+        position: "topR",
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handlePhotoInputChange = (
@@ -69,35 +147,41 @@ const CreateProject = () => {
         if (img.naturalWidth >= 500) {
           setImgSrc(img.src);
         } else {
-          dispatchNotification({position:'topR',type:"error",message:"incorrect image width"})
-          setImgSrc(null)
-          event.target.value = ''
-
+          dispatchNotification({
+            position: "topR",
+            type: "error",
+            message: "incorrect image width",
+          });
+          setImgSrc(null);
+          event.target.value = "";
         }
       });
       img.src = objectUrl;
     }
   };
 
-  const handleAvatarImgInputChange =(
+  const handleAvatarImgInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     if (event.currentTarget.files) {
       const img = new Image();
       const objectUrl = URL.createObjectURL(event.currentTarget.files[0]);
       img.addEventListener("load", function () {
-        if (img.naturalWidth >= 50 ) {
+        if (img.naturalWidth >= 50) {
           setImgSrcAvatar(img.src);
         } else {
-          dispatchNotification({position:'topR',type:"error",message:"incorrect image width"})
-          setImgSrcAvatar(null)
-          event.target.value = ''
-
+          dispatchNotification({
+            position: "topR",
+            type: "error",
+            message: "incorrect image width",
+          });
+          setImgSrcAvatar(null);
+          event.target.value = "";
         }
       });
       img.src = objectUrl;
     }
-  }
+  };
   //Create JSX
   const createForm = () => {
     return (
@@ -106,12 +190,15 @@ const CreateProject = () => {
           proposal: "",
           creator: "",
           photo: null,
-          fundAmount: "",
+          fundAmount: 0,
           walletAddress: "",
         }}
-        validationSchema={Yup.object({
+        validationSchema={Yup.object().shape({
           proposal: Yup.string().required("Required!"),
           creator: Yup.string().required("Required!"),
+          fundAmount: Yup.number()
+            .typeError("you must specify a number")
+            .required("Required!"),
         })}
         onSubmit={handleSubmit}
       >
@@ -122,13 +209,7 @@ const CreateProject = () => {
             id="kdjflkd"
             placeholder=""
           />
-
-          <TextInput
-            name="creator"
-            label="creator"
-            className=""
-            placeholder=""
-          />
+          <TextInput name="creator" label="creator" placeholder="" />
           <div className="mb-4">
             <label
               htmlFor="cryptos"
@@ -146,47 +227,72 @@ const CreateProject = () => {
               <option value="blue">DAI</option>
             </Field>
             <div>
-              <label htmlFor="photo">Project Image for Header</label>
+              <label
+                htmlFor="photo"
+                className="block  text-sm font-medium text-gray-900 dark:text-gray-300 border-2 p-2 my-2"
+              >
+                <FileUploadOutlinedIcon className="text-primary-color" /> Upload
+                Project Image for Header
+              </label>
               <input
                 id="photo"
-                name="photo"
+                name="photo
+                "
                 type="file"
                 onChange={handlePhotoInputChange}
-                // value=""
+                className=" hidden"
+                aria-describedby="file_input_help"
               />
-              {imgSrc && <ImageCrop imgSrc={imgSrc} aspect={3 / 1} />}
+              {imgSrc && (
+                <ImageCrop
+                  imgSrc={imgSrc}
+                  aspect={3 / 1}
+                  setCanvas={setImgCanvas}
+                />
+              )}
             </div>
             <div>
-              <label htmlFor="photo">Project Avatar Square Image</label>
+              <label
+                htmlFor="avatar"
+                className="block text-sm font-medium text-gray-900 dark:text-gray-300 border-2 p-2 my-2"
+              >
+                <FileUploadOutlinedIcon className="text-primary-color" />
+                Upload Project Avatar Square Image
+              </label>
               <input
-                id="photo"
-                name="photo"
+                id="avatar"
+                name="avatar"
                 type="file"
                 onChange={handleAvatarImgInputChange}
-                // value=""
+                className="hidden"
+                aria-describedby="file_input_help"
               />
-              {imgSrcAvatar && <ImageCrop imgSrc={imgSrcAvatar} aspect={1 / 1} unit="px" initialAspectWidth={200} />}
+              {imgSrcAvatar && (
+                <ImageCrop
+                  imgSrc={imgSrcAvatar}
+                  aspect={1 / 1}
+                  unit="px"
+                  initialAspectWidth={250}
+                  setCanvas={setImgAvatarCanvas}
+                />
+              )}
             </div>
           </div>
-          <TextInput
-            name="fundAmount"
-            label="fund amount"
-            className=""
-            placeholder=""
-          />
+          <TextInput name="fundAmount" label="fund amount" placeholder="" />
           <TextInput
             name="walletAddress"
-            label="wallet address"
-            className=""
             placeholder=""
+            label="wallet address"
+            validate={validateEthereumAddress}
           />
-
           <CommonButton
             text="submit"
             variant="contained"
             className="bg-primary-color"
+            type="submit"
+            disabled={isLoading}
           />
-          <button onClick={test}> print ipfs data</button>
+          {isLoading && <CustomLinerProgress />}{" "}
         </Form>
       </Formik>
     );
@@ -201,18 +307,6 @@ const CreateProject = () => {
   };
 
   // Effects
-  // useEffect(() => {
-  //   if (!file) {
-  //     setPreview(null);
-  //     return;
-  //   }
-
-  //   const objectUrl = URL.createObjectURL(file);
-  //   setPreview(objectUrl);
-
-  //   // free memory when ever this component is unmounted
-  //   return () => URL.revokeObjectURL(objectUrl);
-  // }, [file]);
 
   //Return
   return (
