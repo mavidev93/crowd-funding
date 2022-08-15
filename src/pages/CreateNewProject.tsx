@@ -1,7 +1,7 @@
 import React from 'react'
 
 //App
-import CreateProject from '../features/createProject/CreateProject'
+import CreateProject from '../features/CreateCampaign/CreateCampaign'
 
 type Props = {}
 

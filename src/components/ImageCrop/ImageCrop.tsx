@@ -98,7 +98,6 @@ function ImageCrop({
     if (aspect) {
       const { width, height } = e.currentTarget;
       if (width >= 500) {
-        console.log(`width is ${width}`);
         setCrop(
           centerAspectCrop(width, height, aspect, unit, initialAspectWidth)
         );

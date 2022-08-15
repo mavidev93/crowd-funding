@@ -14,15 +14,25 @@ import { NotificationProvider } from "web3uikit";
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 
+// const initializeOnMount = process.env.REACT_APP_INITIALIZE_ON_MOUNT;
+// console.log(`InitializeOnMount ${initializeOnMount}`);
 root.render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>
       <Provider store={store}>
         <BrowserRouter>
           <MoralisProvider
-            appId="3xopGYdk8vVVb6A84aMLvyGQiKeu7NRtaXkC2892"
-            serverUrl="https://21itqwqqqxag.usemoralis.com:2053/server"
-            // initializeOnMount={false}
+            // appId={
+            //   initializeOnMount
+            //     ? "txwSNFvYMJatNCbSfFhN6itj95eCyeSqNx2E7RCz"
+            //     : ""
+            // }
+            // serverUrl={
+            //   initializeOnMount
+            //     ? "https://db8q9dzv8fdo.usemoralis.com:2053/server"
+            //     : ""
+            // }
+            initializeOnMount={ false}
           >
             <NotificationProvider>
               <App />

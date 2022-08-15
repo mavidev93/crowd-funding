@@ -9,8 +9,6 @@ import loadable from "@loadable/component";
 
 //Application
 import DefaultLayout from "../layout/DefaultLayout";
-import MainTest from "../layout/Main/Main";
-import CreateNewProjectTest from "../pages/CreateNewProject";
 
 const Loading = () => <div>loading ...</div>;
 
@@ -20,10 +18,14 @@ const Main = loadable(() => import("../layout/Main/Main"), {
 const CreateNewProject = loadable(() => import("../pages/CreateNewProject"), {
   fallback: Loading(),
 });
+const SingleProject = loadable(() => import("../pages/SingleProject"),{
+  fallback:Loading()
+});
 
 const roots = [
   // { url: "/", component: Main },
   { url: "/create-new-project", component: CreateNewProject },
+  { url: "/campaigns/:campaignID", component: SingleProject },
 ];
 
 function MainRoute() {

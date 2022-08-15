@@ -28,7 +28,7 @@ const navItemsRight: navItem[] = [
     id: nanoid(),
     classNames: `order-8 ${sharedClasses} `,
 
-    component: <ConnectButton  />,
+    component: <ConnectButton moralisAuth={false} />,
   },
 
   {
@@ -60,7 +60,7 @@ const navItemsLeft: navItem[] = [
     id: nanoid(),
     classNames: `order-2 ${sharedClasses} `,
 
-    root: "/",
+    root: "/campaigns/1",
   },
   {
     name: "create project",
