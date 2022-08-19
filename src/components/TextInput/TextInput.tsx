@@ -9,6 +9,7 @@ interface TextInputProps {
   className?: string;
   placeholder: string;
   validate?: (value: any) => string | undefined;
+  value?: string | null;
 }
 
 const TextInput = ({
@@ -17,6 +18,7 @@ const TextInput = ({
   className,
   placeholder,
   validate,
+  value,
 }: TextInputProps) => {
   const [field, meta, helper] = useField({
     name,
@@ -24,6 +26,7 @@ const TextInput = ({
     placeholder,
     validate,
   });
+
   return (
     <div className={"my-2 " + className}>
       {label && (

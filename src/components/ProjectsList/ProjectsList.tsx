@@ -5,7 +5,7 @@ import React from "react";
 //App
 import CommonTitle from "../CommonTitle/CommonTitle";
 import CommonButton from "../CommonButton/CommonButton";
-import SingleProject from "../SingleProject/SingleProject";
+import SingleProject from "../CampaignCard/CampaignCard";
 import CustomDivider from "../CustomDivider/CustomDivider";
 
 export interface SingleProjectType {

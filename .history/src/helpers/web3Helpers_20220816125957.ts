@@ -1,0 +1,3 @@
+export getRecepte = (tx:any)=>{
+    
+}
