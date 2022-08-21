@@ -1,5 +1,6 @@
 /** @format */
-
+//@type-ignore
+import { Web3Storage } from "web3.storage/dist/bundle.esm.min.js";
 
 import React from "react";
 import { createRoot } from "react-dom/client";

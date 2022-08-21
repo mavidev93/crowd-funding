@@ -4,4 +4,4 @@
 interface Window {
     ethereum: any
 }
-// declare module 'web3.storage/dist/bundle.esm.min.js'
+declare module 'web3.storage/dist/bundle.esm.min.js

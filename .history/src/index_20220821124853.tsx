@@ -1,4 +1,5 @@
 /** @format */
+import { Web3Storage } from 'web3.storage/dist/bundle.esm.min.js';
 
 
 import React from "react";
