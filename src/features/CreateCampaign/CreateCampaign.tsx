@@ -1,5 +1,5 @@
 /** @format */
-
+//React
 import { useState, useEffect } from "react";
 
 //Third party
@@ -8,10 +8,8 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useMoralis, useMoralisFile, useWeb3Contract } from "react-moralis";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-import { create, CID, IPFSHTTPClient } from "ipfs-http-client";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
-// import { Web3Storage } from "web3.storage";
 import { useNavigate } from "react-router-dom";
 
 //App
@@ -67,16 +65,16 @@ const CreateCampaign = () => {
     user,
     Moralis,
     account,
+    web3
   } = useMoralis();
 
   const navigate = useNavigate();
-
   const chainId: string = parseInt(chainIdHex!).toString();
   const crowdFundAddress =
     chainId in contractAddresses ? addresses[chainId][0] : null;
 
   const dispatchNotification = useNotification();
-
+  console.log(chainId)
   // Contract funtions
   const {
     data,
@@ -129,6 +127,7 @@ const CreateCampaign = () => {
 
   //Handlers
   const handleSubmit = async (values: any, actions: any) => {
+    console.log(crowdFundAddress)
     try {
       if (!editorVal) throw "campaign description is empty";
     } catch (e) {
@@ -173,10 +172,11 @@ const CreateCampaign = () => {
       headerImgPath,
       avatarImgPath,
     };
-
+    console.log(campaignObj)
     try {
       const files = makeFileObjects(campaignObj, campaignTitle);
       const cid = await storeFiles(files);
+      console.log(cid)
       const path = `${cid}/${campaignTitle}`;
 
       const handleSuccess = async (tx: any) => {
@@ -192,6 +192,7 @@ const CreateCampaign = () => {
       };
 
       const handleError = (error: any) => {
+        console.log(error)
         dispatchNotification({
           message: "Project Creation Failed",
           type: "error",
@@ -220,6 +221,7 @@ const CreateCampaign = () => {
         type: "error",
         position: "topR",
       });
+      console.log(e)
     } finally {
       setIsLoading(false);
     }
@@ -283,7 +285,6 @@ const CreateCampaign = () => {
             walletAddress: "",
           }}
           validationSchema={Yup.object().shape({
-            // proposal: Yup.string().required("Required!"),
             campaignTitle: Yup.string().required("Required!"),
             fundingPeriodInDays: Yup.number()
               .min(1)
@@ -421,4 +422,3 @@ const CreateCampaign = () => {
 
 export default CreateCampaign;
 
-//https://ipfs.infura.io/ipfs/

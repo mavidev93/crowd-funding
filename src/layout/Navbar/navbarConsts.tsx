@@ -27,7 +27,7 @@ const navItemsRight: navItem[] = [
     name: "Created Campaigns",
     id: nanoid(),
     classNames: `order-8 ${sharedClasses} `,
-    root: "/user/created-campaigns",
+    root: "/user/createdCampaigns",
 
     // component: <ConnectButton moralisAuth={false} />,
   },
@@ -36,7 +36,7 @@ const navItemsRight: navItem[] = [
     name: "Funded Campaigns",
     id: nanoid(),
     classNames: `order-5 ${sharedClasses} `,
-    root: "/funded-campaigns",
+    root: "/user/fundedCampaigns",
   },
 ];
 

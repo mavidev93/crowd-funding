@@ -24,15 +24,19 @@ const SingleCampaignPage = loadable(
     fallback: Loading(),
   }
 );
-const CreatedCampaigns = loadable(
-  () => import("../features/CreatedCampaigns/CreatedCampaigns")
+const UserCampaign = loadable(
+  () => import("../components/UserCampaigns/UserCampaigns")
 );
+
+const CreatedCampaigns = loadable(
+  () =>import("../features/CreatedCampaigns/CreatedCampaigns")
+)
 
 const roots = [
   // { url: "/", component: Main },
   { url: "/create-campaign", component: CreateNewProject },
   { url: "/campaigns/:campaignPath", component: SingleCampaignPage },
-  { url: "/user/created-campaigns", component: CreatedCampaigns },
+  { url: "/user/createdCampaigns", component: CreatedCampaigns },
 ];
 
 function MainRoute() {

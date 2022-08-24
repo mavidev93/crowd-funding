@@ -1,21 +1,22 @@
+/** @format */
+
 //Third Party
 import { nanoid } from "@reduxjs/toolkit";
 
 //App
-import ProjectsList from '../../components/ProjectsList/ProjectsList'
+import CampaignsList from "../../components/CampaignsList/CampaignsList";
 import CustomDivider from "../../components/CustomDivider/CustomDivider";
 
-type Props = {}
+type Props = {};
 
 const HottestProjects = (props: Props) => {
   return (
     <div>
-        <ProjectsList title="Hottest Project" projects={dummyProjects}/>
-        <CustomDivider className="my-12"  />
-
+      {/* <CampaignsList title="Hottest Project" projects={dummyProjects}/> */}
+      <CustomDivider className="my-12" />
     </div>
-  )
-}
+  );
+};
 
 const dummyProjects = [
   {

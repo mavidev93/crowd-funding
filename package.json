@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.4.5",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@loadable/component": "^5.15.2",
@@ -42,9 +43,9 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts  --max_old_space_size=4096 start",
-    "build": "react-scripts  --max_old_space_size=4096 build ",
-    "test": "react-scripts test",
+    "start": "craco  --max_old_space_size=4096 start",
+    "build": "craco  --max_old_space_size=4096 build ",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -67,8 +68,8 @@
   },
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.0",
-    "autoprefixer": "^10.4.7",
-    "postcss": "^8.4.13",
-    "tailwindcss": "^3.0.24"
+    "autoprefixer": "^9",
+    "postcss": "^7",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }

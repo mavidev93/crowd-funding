@@ -70,7 +70,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 type Props = {
   campaignHash: string;
   isCampaignOpen: boolean | undefined;
-  getCampaign: any;
+ 
 };
 
 interface contractAddressesInterface {
@@ -81,7 +81,7 @@ interface contractAddressesInterface {
 export default function FundModal({
   campaignHash,
   isCampaignOpen,
-  getCampaign,
+
 }: Props) {
   const [open, setOpen] = React.useState(false);
   const [fundVal, setFundVal] = React.useState<string>("");
@@ -120,7 +120,7 @@ export default function FundModal({
             type: "success",
           });
           setOpen(false);
-          getCampaign();
+
         }
       },
 

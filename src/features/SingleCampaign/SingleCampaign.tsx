@@ -3,11 +3,9 @@
 import { useEffect, useState } from "react";
 
 //Third Party
-import { nanoid } from "@reduxjs/toolkit";
 import { useParams, useLocation } from "react-router-dom";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import axios from "axios";
-import { useMoralis, useMoralisFile, useWeb3Contract } from "react-moralis";
+import { useMoralis, useWeb3Contract } from "react-moralis";
 import { useNotification } from "web3uikit";
 import CircularProgress from "@mui/material/CircularProgress";
 import ReactMarkdown from "react-markdown";
@@ -21,6 +19,8 @@ import {
   bigNumberToNumber,
   createUrl,
   bigNumberToString,
+  getDaysLeft,
+  getReadableCampaign,
 } from "../../helpers/helpers";
 import { makeStorageClient } from "../../helpers/web3Storage";
 import FundModal from "../../components/FundModal/FundModal";
@@ -31,7 +31,7 @@ interface contractAddressesInterface {
   [key: string]: string[];
 }
 //Component
-const SingleProjectPage = (props: Props) => {
+const SingleCampaign = (props: Props) => {
   //States
   const [campaign, setCampaign] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -77,47 +77,8 @@ const SingleProjectPage = (props: Props) => {
     try {
       const hash = location.state.hash;
       if (!hash) return;
-      const handleSuccess = async (tx: any) => {
-        const {
-          campaignHash,
-          campaignOwner,
-          // campaignUrl,
-          deadline,
-          goalAchieved,
-          isCampaignOpen,
-          isExists,
-          totalAmountFunded,
-        }: any = tx;
-        console.log(campaignHash);
-        const campaignIpfs = (await axios.get(createUrl(campaignHash))).data;
-        const {
-          avatarImgPath,
-          campaignDescription,
-          campaignTitle,
-          fundingPeriodInDays,
-          goalAmount,
-          headerImgPath,
-          walletAddress,
-        }: any = campaignIpfs;
-
-        const deadlineInMilliSec = bigNumberToNumber(deadline) * 1000;
-        const now = Date.now();
-        const daysLeft = Math.floor(
-          (deadlineInMilliSec - now) / (24 * 3600 * 1000)
-        );
-        const campaign = {
-          campaignHash,
-          campaignDescription,
-          daysLeft,
-          isCampaignOpen,
-          totalAmountFunded: bigNumberToString(totalAmountFunded),
-          isExists,
-          campaignTitle,
-          fundingPeriodInDays,
-          goalAmount,
-          headerImgPath,
-        };
-
+      const handleSuccess = async (txCampaign: any) => {
+        const campaign = await getReadableCampaign(txCampaign);
         setCampaign(campaign);
       };
 
@@ -171,7 +132,6 @@ const SingleProjectPage = (props: Props) => {
                   <FundModal
                     campaignHash={campaign.campaignHash}
                     isCampaignOpen={campaign.isCampaignOpen}
-                    getCampaign={getCampaign}
                   />
                   <p className="flex-1 text-right text-secondary-color	">
                     {" "}
@@ -206,4 +166,4 @@ const SingleProjectPage = (props: Props) => {
   );
 };
 
-export default SingleProjectPage;
+export default SingleCampaign;

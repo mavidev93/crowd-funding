@@ -15,9 +15,9 @@ function Main() {
     <section className="mx-auto px-3 md:max-w-screen-xl ">
       <MainTitle />
       <Showcase />
-      <HottestProjects />
+      {/* <HottestProjects />
       <FeaturesCarousel  />
-      <NewestProjects/>
+      <NewestProjects/> */}
     </section>
   );
 }

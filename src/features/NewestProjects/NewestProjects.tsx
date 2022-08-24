@@ -5,14 +5,14 @@ import { nanoid } from "@reduxjs/toolkit";
 
 //App
 
-import ProjectsList from "../../components/ProjectsList/ProjectsList";
+import CampaignsList from "../../components/CampaignsList/CampaignsList";
 
 type Props = {};
 
 const NewestProjects = (props: Props) => {
   return (
     <div>
-      <ProjectsList title="Newest projects" projects={dummyProjects} />
+      {/* <CampaignsList title="Newest projects" projects={dummyProjects} /> */}
     </div>
   );
 };
