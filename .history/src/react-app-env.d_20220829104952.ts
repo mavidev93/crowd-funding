@@ -35,7 +35,5 @@ interface CampaignIpfs {
   campaignOwner: string;
   campaignTitle: string;
   isBookmarked?: boolean;
-  goalAmount: string;
-  headerImgPath?: string;
 
 }

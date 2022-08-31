@@ -32,10 +32,7 @@ interface CampaignIpfs {
   avatarImgPath?: string;
   campaignDescription: string;
   campaignHash: string;
-  campaignOwner: string;
-  campaignTitle: string;
-  isBookmarked?: boolean;
-  goalAmount: string;
-  headerImgPath?: string;
+
+
 
 }

@@ -18,19 +18,19 @@ import ConnectPlease from "../../components/ConnectPlease/ConnectPlease";
 import ReadMore from "../../components/ReadMore/ReadMore";
 // import DaysLeft from "../../components/DaysLeft/DaysLeft"
 
-interface Props {
-  campaignIpfs: CampaignIpfs;
+interface Props extends CampaignIpfs {
 }
-const CampaignCard = ({ campaignIpfs }: Props) => {
-  const {
-    campaignTitle,
-    campaignDescription,
-    campaignHash,
-    isBookmarked,
-    goalAmount,
-    headerImgPath,
-    avatarImgPath,
-  } = campaignIpfs;
+const CampaignCard = ({
+
+
+}: Props) => {
+  campaignTitle,
+  campaignDescription,
+  campaignHash,
+  isBookmarked,
+  goalAmount,
+  headerImgPath,
+  avatarImgPath,
   //Hooks
   const { isWeb3Enabled } = useMoralis();
 
@@ -38,10 +38,9 @@ const CampaignCard = ({ campaignIpfs }: Props) => {
   const createCampJSX = () => {
     return (
       <>
-      <img src="https://images.unsplash.com/photo-1653155864141-57b96ee8216f?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1127" className="aspect-video" />
         <CommonTitle
           text={campaignTitle}
-          className="text-center text-lg	text-bold mt-3"
+          className="text-center text-lg	text-bold"
         />
         <div>
           <ReactMarkdown className="line-clamp-2 ">
@@ -51,14 +50,18 @@ const CampaignCard = ({ campaignIpfs }: Props) => {
             {/* <p className="text-lime-600 font-bold text-primary-color order-3">
                 <span>Funded Amount: </span> <span>{totalAmountFunded}</span>
               </p> */}
-            <p className="text-lime-600 font-bold text-primary-color-dark ">
+            <p className="text-lime-600 font-bold text-primary-color-dark order-5">
               <span>Goal Amount:</span> <span>{goalAmount}</span>
             </p>
             {/* <DaysLeft daysLeft={daysLeft} /> */}
-            <ReadMore campaignHash={campaignHash} campaignTitle={campaignTitle} />
-
           </div>
 
+          <div className="flex justify-between">
+            {/* <FundModal
+              campaignHash={campaignHash}
+              isCampaignOpen={isCampaignOpen}
+            /> */}
+          </div>
         </div>
       </>
     );
@@ -66,21 +69,29 @@ const CampaignCard = ({ campaignIpfs }: Props) => {
 
   return (
     <div className="my-3 px-2 ">
-      <div className="border border-solid border-bdr-gray py-4 px-5  w-5/6 mx-auto relative ">
-        {createCampJSX()}
+      {isWeb3Enabled ? (
+        <div className="border border-solid border-bdr-gray py-4 px-5  w-5/6 mx-auto relative ">
+          {createCampJSX()}
 
-        <div className="absolute flex flex-col h-full justify-between top-0  -right-5">
-          <IconButton aria-label="bookmark" className="bg-white ">
-            <BookmarkAddOutlined fontSize="medium" />
-          </IconButton>
-          {/* <IconButton aria-label="Like" className="bg-white mt-10">
+          <div className="absolute flex flex-col h-full justify-between top-0  -right-5">
+            <IconButton aria-label="bookmark" className="bg-white ">
+              <BookmarkAddOutlined fontSize="medium" />
+            </IconButton>
+            {/* <IconButton aria-label="Like" className="bg-white mt-10">
               <ThumbUpOffAltIcon fontSize="medium" />
             </IconButton>
             <IconButton aria-label="dislike" className="bg-white ">
               <ThumbDownOffAltIcon fontSize="medium" />
             </IconButton> */}
+            <ReadMore
+              campaignHash={campaignHash}
+              campaignTitle={campaignTitle}
+            />
+          </div>
         </div>
-      </div>
+      ) : (
+        <ConnectPlease />
+      )}
     </div>
   );
 };

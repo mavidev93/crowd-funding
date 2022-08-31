@@ -38,10 +38,9 @@ const CampaignCard = ({ campaignIpfs }: Props) => {
   const createCampJSX = () => {
     return (
       <>
-      <img src="https://images.unsplash.com/photo-1653155864141-57b96ee8216f?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1127" className="aspect-video" />
         <CommonTitle
           text={campaignTitle}
-          className="text-center text-lg	text-bold mt-3"
+          className="text-center text-lg	text-bold"
         />
         <div>
           <ReactMarkdown className="line-clamp-2 ">
@@ -51,7 +50,7 @@ const CampaignCard = ({ campaignIpfs }: Props) => {
             {/* <p className="text-lime-600 font-bold text-primary-color order-3">
                 <span>Funded Amount: </span> <span>{totalAmountFunded}</span>
               </p> */}
-            <p className="text-lime-600 font-bold text-primary-color-dark ">
+            <p className="text-lime-600 font-bold text-primary-color-dark order-5">
               <span>Goal Amount:</span> <span>{goalAmount}</span>
             </p>
             {/* <DaysLeft daysLeft={daysLeft} /> */}
@@ -59,6 +58,7 @@ const CampaignCard = ({ campaignIpfs }: Props) => {
 
           </div>
 
+          </div>
         </div>
       </>
     );

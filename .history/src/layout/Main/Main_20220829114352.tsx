@@ -14,10 +14,9 @@ function Main() {
       <Showcase />
       {/* <HottestProjects />
 
+      // <FeaturesCarousel  />
       <NewestProjects/> */}
       <FreshFavorites />
-      <FeaturesCarousel  />
-
     </section>
   );
 }

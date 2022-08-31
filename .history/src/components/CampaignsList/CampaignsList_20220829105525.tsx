@@ -8,10 +8,11 @@ import CampaignCard from "../CampaignCard/CampaignCard";
 
 type Props = {
   campaigns: CampaignIpfs[];
+  ShowData: boolean;
   title: string;
 };
 
-const CampaignsList = ({ campaigns, title }: Props) => {
+const CampaignsList = ({ campaigns, title, ShowData }: Props) => {
   return (
     <div>
       <CommonTitle text={title} className="text-xl text-center my-8 " />
