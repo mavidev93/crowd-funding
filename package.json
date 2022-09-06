@@ -2,7 +2,6 @@
   "name": "crowd-funding",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mavidev93.github.io/crowd-funding",
   "dependencies": {
     "@craco/craco": "^6.4.5",
     "@emotion/react": "^11.9.0",
