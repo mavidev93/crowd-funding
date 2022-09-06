@@ -4,7 +4,7 @@
 import { nanoid } from "nanoid";
 
 //Third Party
-import { BookmarkBorder, Login } from "@mui/icons-material";
+import { BookmarkBorder } from "@mui/icons-material";
 import React from "react";
 import { ConnectButton } from "web3uikit";
 import Button from "@mui/material/Button";
@@ -25,14 +25,14 @@ export interface navItem {
 const sharedClasses = "pl-0 md:pl-5 capitalize font-bold text-sm	";
 
 const navItemsRight: navItem[] = [
-  {
-    // REFACTOR and add bookmark notification MAYBE
+  // {
+  //   // REFACTOR and add bookmark notification MAYBE
 
-    id: nanoid(),
-    component: <BookmarkBorder className="text-tx-black  " />,
-    classNames: `order-12 ${sharedClasses} `,
-    root: "/bookmarks",
-  },
+  //   id: nanoid(),
+  //   component: <BookmarkBorder className="text-tx-black  " />,
+  //   classNames: `order-12 ${sharedClasses} `,
+  //   root: "/bookmarks",
+  // },
 
   {
     id: nanoid(),
@@ -69,7 +69,6 @@ const navItemsLeft: navItem[] = [
 ];
 
 const navItemsCenter: navItem[] = [
-  // TODO: Website Name
   {
     id: nanoid(),
     classNames: " order-0  italic md:flex grow  justify-center ",

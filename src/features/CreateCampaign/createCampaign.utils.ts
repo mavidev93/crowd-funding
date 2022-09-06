@@ -1,11 +1,14 @@
-import {ethers} from 'ethers'
+/** @format */
+
+import { ethers } from "ethers";
 
 export function validateEthereumAddress(value: any) {
-    let error;
-    if (!value) {
-      error = "Required!";
-    } else if (!ethers.utils.isAddress(value)) {
-      error = "invalid address!";
-    }
-    return error;
+
+  let error;
+  if (!value) {
+    error = "Required!";
+  } else if (!ethers.utils.isAddress(value)) {
+    error = "invalid address!";
   }
+  return error;
+}

@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 //Third Party
 import { Link } from "react-router-dom";
-import {nanoid} from "nanoid"
+import { nanoid } from "nanoid";
 //App
 import {
   navItem,
@@ -57,9 +57,12 @@ const CellPhoneNav = (props: Props) => {
     navMenuRef?.current?.classList.remove("active");
   };
 
-  // window?.onscroll(()=>console.log('scroll'))
+  // window?.onscroll(()=>
   return (
-    <div className="fixed w-full bg-white	 md:hidden " onScroll={handleScroll}>
+    <div
+      className="relative w-full bg-white	z-50  md:hidden "
+      onScroll={handleScroll}
+    >
       {createNavList(navItemsCenter)}
       <div className="hamburger" ref={hamRef} onClick={handleHamClick}>
         <span className="bar"></span>
@@ -68,7 +71,7 @@ const CellPhoneNav = (props: Props) => {
       </div>
       <CommonDivider />
 
-      <ul className="flex flex-col nav-menu " ref={navMenuRef}>
+      <ul className="flex flex-col nav-menu bg-white " ref={navMenuRef}>
         {items && createNavList(items)}
       </ul>
     </div>

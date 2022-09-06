@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 //Third Party
-import {  useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { useMoralis, useWeb3Contract } from "react-moralis";
 import { useNotification } from "web3uikit";
@@ -14,12 +14,10 @@ import ReactMarkdown from "react-markdown";
 import ConnectPlease from "../../components/ConnectPlease/ConnectPlease";
 import CommonTitle from "../../components/CommonTitle/CommonTitle";
 import CommonButton from "../../components/CommonButton/CommonButton";
-import useContract from "../../hooks/useContract"
-import {
-  createUrl,
-  getReadableCampaign,
-} from "../../helpers/helpers";
+import useContract from "../../hooks/useContract";
+import { createUrl, getReadableCampaign } from "../../helpers/helpers";
 import FundModal from "../../components/FundModal/FundModal";
+import CommonDivider from "../../components/CommonDivider/CommonDivider";
 type Props = {};
 
 //Component
@@ -30,29 +28,16 @@ const SingleCampaign = (props: Props) => {
   //Variables
 
   //Hooks
-  const {
-    Moralis,
-    isWeb3Enabled,
-    chainId: chainIdHex,
-    account,
-    enableWeb3,
-  } = useMoralis();
+  const { isWeb3Enabled } = useMoralis();
   const dispatchNotification = useNotification();
-
-  // const {contract,crowdFundAddress,abi} = useContract()
   const contractData = useContract();
   //Contract functions
-
   const { runContractFunction: getCampaignByHash } = useWeb3Contract({
     abi: contractData?.abi,
     contractAddress: contractData?.crowdFundAddress || undefined,
     functionName: "getCampaignByHash",
   });
-
   const location: any = useLocation();
-
-  //Handlers
-
   //Effects
   useEffect(() => {
     if (!isWeb3Enabled) return;
@@ -65,13 +50,20 @@ const SingleCampaign = (props: Props) => {
       const hash = location.state.hash;
       if (!hash) return;
       const handleSuccess = async (txCampaign: any) => {
-        const campaign = await getReadableCampaign(txCampaign);
-        setCampaign(campaign);
+        try {
+          const campaign = await getReadableCampaign(txCampaign);
+          setCampaign(campaign);
+        } catch (e: any) {
+          setError(e.message);
+        }
       };
 
       await getCampaignByHash({
         onSuccess(tx) {
           handleSuccess(tx);
+        },
+        onError(e) {
+          setError(e.message);
         },
         params: { params: { hash: hash } },
       });
@@ -93,16 +85,24 @@ const SingleCampaign = (props: Props) => {
             <>
               <div className="flex justify-center py-2 ">
                 {campaign.headerImgPath && (
-                  <img src={createUrl(campaign.headerImgPath)} />
+                  <img
+                    style={{
+                      outline: "rgba(0, 0, 0, 0.12)  solid 0.5px",
+                      outlineOffset: "3px",
+                    }}
+                    src={createUrl(campaign.headerImgPath)}
+                  />
                 )}{" "}
               </div>
 
               <CommonTitle
                 text={campaign.campaignTitle}
-                className="text-center text-lg	text-bold"
+                className="text-center text-lg	text-bold mt-2"
               />
               <div>
+                <h3 className="italic font-bold	">Story:</h3>
                 <ReactMarkdown>{campaign.campaignDescription}</ReactMarkdown>
+                <CommonDivider className="my-3" />
                 <div className="flex justify-between items-center w-full mt-4	">
                   <div className="flex flex-col flex-1">
                     <p className="text-lime-600 font-bold text-primary-color">
@@ -134,9 +134,8 @@ const SingleCampaign = (props: Props) => {
             </>
           ) : (
             <div className=" ">
-              {/* //TODO: add a not fund page */}
               {error ? (
-                <span>Not Fund! </span>
+                <span className="text-red-600">Not Fund! </span>
               ) : (
                 <div className="flex items-center ">
                   <span className="italic mr-3">Loading ...</span>{" "}

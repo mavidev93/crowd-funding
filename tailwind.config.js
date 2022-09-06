@@ -7,6 +7,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      flexBasis: {
+        "1/2": "50%",
+      },
       colors: {
         "primary-color": "var(--primary-color)",
         "primary-color-dark": "var(--primary-color-dark)",

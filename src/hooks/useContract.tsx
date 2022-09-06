@@ -27,7 +27,7 @@ const useContract = () => {
     // if(!chainId)return {contract:"", crowdFundAddress:"", abi:{}}
 
     const crowdFundAddress =
-      chainId in contractAddresses ? addresses[chainId][0] : null;
+      chainId in contractAddresses ? addresses[chainId][0] : undefined;
     //@ts-ignore
     const contract = new ethers.Contract(crowdFundAddress!, abi, provider);
     return { contract, crowdFundAddress, abi };

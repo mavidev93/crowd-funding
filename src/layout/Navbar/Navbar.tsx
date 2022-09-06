@@ -3,7 +3,7 @@ import CustomDivider from "../../components/CommonDivider/CommonDivider";
 
 //Third Party
 import { Link } from "react-router-dom";
-
+import BookmarkMenu from "../../components/BookmarkMenu/BookmarkMenu";
 //App
 import {
   navItemsCenter,
@@ -11,26 +11,28 @@ import {
   navItemsLeft,
   navItem,
 } from "./Navbar.static";
-import { ReactComponent as CrowdFundingLogo } from "../../assets/images/CROWD-FUNDING-logo.svg";
-import { ConnectButton } from "web3uikit";
+// import { ReactComponent as CrowdFundingLogo } from "../../assets/images/CROWD-FUNDING-logo.svg";
+// import { ConnectButton } from "web3uikit";
+import { useBookmark } from "../../contexts/bookmark-context";
 import CellPhoneNav from "./CellPhoneNav";
 function Navbar() {
+  const { bookmark } = useBookmark();
+
   //Create JSX
   const createNavList = (navItems: navItem[]) => {
     return navItems.map((item) => (
       <li key={item.id} className={item.classNames}>
-
         {item.root ? (
           <Link to={item.root}>
             {item.name}
             {item.component && item.component}
           </Link>
-        ):
+        ) : (
           <>
-             {item.name}
-            {item.component }
+            {item.name}
+            {item.component}
           </>
-        }{" "}
+        )}{" "}
       </li>
     ));
   };
@@ -44,15 +46,17 @@ function Navbar() {
             {createNavList(navItemsLeft)}
           </ul>
           <ul>{createNavList(navItemsCenter)}</ul>
-          <ul className="flex flex-row-reverse items-center flex-1 	 	 ">
+          <ul className="flex flex-row-reverse items-center flex-1  ">
             {createNavList(navItemsRight)}
+            <li className="order-12">
+              <BookmarkMenu bookmarkCount={bookmark.length} />
+            </li>
           </ul>
         </div>
         {/* <CustomDivider /> */}
       </nav>
       <CellPhoneNav />
       <CustomDivider />
-
     </section>
   );
 }

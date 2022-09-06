@@ -4,7 +4,7 @@
 import MainTitle from "./MainTitle";
 import Showcase from "../../features/showcase/Showcase";
 import HottestProjects from "../../features/HottestProjects/HottestProjects";
-import FeaturesCarousel from "../../features/featuresCarousel/FeaturesCarousel";
+import FeaturesCarousel from "../../features/FeaturesCarousel/FeaturesCarousel";
 import FreshFavorites from "../../features/FreshFavorites/FreshFavorites";
 
 function Main() {

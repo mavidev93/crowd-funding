@@ -12,7 +12,7 @@ import { getCampaignIdOfCreator } from "../../helpers/web3Helpers";
 import CommonButton from "../../components/CommonButton/CommonButton";
 import CampaignCardData from "../../components/CampaignCardData/CampaignCardData";
 import ReadMore from "../../components/ReadMore/ReadMore";
-
+import ConnectPlease from "../../components/ConnectPlease/ConnectPlease";
 //interface
 interface contractAddressesInterface {
   [key: string]: string[];
@@ -20,20 +20,14 @@ interface contractAddressesInterface {
 type Props = {};
 
 const CreatedCampaigns = (props: Props) => {
-  const { account } = useMoralis();
+  const { account, isWeb3Enabled } = useMoralis();
 
   //States
   const [ids, setIds] = useState<null | number[]>(null);
 
-  // const { contract, abi, crowdFundAddress } = useContract();
   const contractData = useContract();
 
-  const campaigns = useGetCampaigns(
-    contractData?.contract,
-    contractData?.abi,
-    ids
-  );
-
+  const campaigns = useGetCampaigns(ids);
   //Contract Functions
   const { runContractFunction: withdrawFunds } = useWeb3Contract({
     abi: contractData?.abi,
@@ -72,36 +66,43 @@ const CreatedCampaigns = (props: Props) => {
   }, [account]);
   return (
     <div className="m-3 md:w-3/5 md:mx-auto">
-      {campaigns &&
-        campaigns.map((c) => (
-          <div className="m-3 py-2 px-3 shadow-md" key={c.campaignHash}>
-            <CampaignCardData campaign={c} />
+      {isWeb3Enabled ? (
+        <>
+          {campaigns &&
+            //get recently created campaigns first
+            campaigns.reverse().map((c) => (
+              <div className="m-3 py-2 px-3 shadow-md" key={c.campaignHash}>
+                <CampaignCardData campaign={c} />
 
-            <div className="flex items-center">
-              <CommonButton
-                text="withdraw Funds"
-                variant="contained"
-                onClick={(e) => handleWithdraw(c.campaignHash)}
-                disabled={c.isOwnerWithdraw || !c.goalAchieved}
-              />
-              <Button
-                onClick={(e) => handleCloseCampaign(c.campaignHash)}
-                color="error"
-                variant="contained"
-                className="ml-2"
-                disabled={!c.isCampaignOpen}
-              >
-                Close Campaign
-              </Button>
-              <div className="ml-auto">
-                <ReadMore
-                  campaignHash={c.campaignHash}
-                  campaignTitle={c.campaignTitle}
-                />
+                <div className="flex items-center">
+                  <CommonButton
+                    text="withdraw Funds"
+                    variant="contained"
+                    onClick={(e) => handleWithdraw(c.campaignHash)}
+                    disabled={c.isOwnerWithdraw || !c.goalAchieved}
+                  />
+                  <Button
+                    onClick={(e) => handleCloseCampaign(c.campaignHash)}
+                    color="error"
+                    variant="contained"
+                    className="ml-2"
+                    disabled={!c.isCampaignOpen}
+                  >
+                    Close Campaign
+                  </Button>
+                  <div className="ml-auto">
+                    <ReadMore
+                      campaignHash={c.campaignHash}
+                      campaignTitle={c.campaignTitle}
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
+            ))}
+        </>
+      ) : (
+        <ConnectPlease />
+      )}
     </div>
   );
 };

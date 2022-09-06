@@ -1,7 +1,7 @@
 /** @format */
 
 //React
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 //Third Party
 import Box from "@mui/material/Box";
@@ -15,7 +15,8 @@ import FormControl from "@mui/material/FormControl";
 import { alpha, styled } from "@mui/material/styles";
 
 import { useMoralis, useMoralisFile, useWeb3Contract } from "react-moralis";
-import { useNotification } from "web3uikit";
+import { Loading, useNotification } from "web3uikit";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import { useLocation } from "react-router-dom";
 //App
@@ -80,12 +81,12 @@ interface contractAddressesInterface {
 export default function FundModal({ campaignHash, isCampaignOpen }: Props) {
   const [open, setOpen] = React.useState(false);
   const [fundVal, setFundVal] = React.useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const dispatchNotification = useNotification();
   const { Moralis, isWeb3Enabled, chainId: chainIdHex } = useMoralis();
-  const location = useLocation();
   const addresses: contractAddressesInterface = contractAddresses;
   const chainId: string = parseInt(chainIdHex!).toString();
   const crowdFundAddress =
@@ -101,12 +102,10 @@ export default function FundModal({ campaignHash, isCampaignOpen }: Props) {
     functionName: "fundCampaign",
   });
   const handleFund = async (e: any, fundVal: string) => {
+    setIsLoading(true);
     await fundCampaign({
       async onSuccess(tx: any) {
         const txRecept = await getRecept(tx);
-
-        // const [sender, campaignHash, txVal] = txRecept.events[0].topics;
-        //
         //Successful Transaction
         if (txRecept.status === 1) {
           dispatchNotification({
@@ -114,11 +113,13 @@ export default function FundModal({ campaignHash, isCampaignOpen }: Props) {
             position: "topR",
             type: "success",
           });
+          setIsLoading(false);
           setOpen(false);
         }
       },
 
       onError(error) {
+        setIsLoading(false);
         dispatchNotification({
           message: "Transaction reverted!",
           position: "topR",
@@ -133,8 +134,8 @@ export default function FundModal({ campaignHash, isCampaignOpen }: Props) {
       },
     });
   };
-  //Effects
 
+  //--------------
   return (
     <div>
       <CommonButton
@@ -184,12 +185,17 @@ export default function FundModal({ campaignHash, isCampaignOpen }: Props) {
             </Typography>
             <CommonButton
               text="Fund &#8594;"
-              disabled={!isCampaignOpen}
+              disabled={isLoading || !isCampaignOpen }
               variant="contained"
-              //   className="bg-primary-color my-3 bg-red-700"
-              sx={{ backgroundColor: "#148aff !important", margin: " 12px 0" }}
               onClick={(e) => handleFund(e, fundVal)}
+              className="mt-3"
             />
+            {isLoading && (
+              <div className="flex justify-center items-center my-2">
+                {" "}
+                <CircularProgress />{" "}
+              </div>
+            )}
           </FormControl>
         </Box>
       </Modal>

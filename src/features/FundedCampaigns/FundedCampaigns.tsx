@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 
 //Third Party
 import { useMoralis, useWeb3Contract } from "react-moralis";
+import { nanoid } from "nanoid";
+import Tooltip from "@mui/material/Tooltip";
 
 //App
 import CampaignCardData from "../../components/CampaignCardData/CampaignCardData";
@@ -13,20 +15,15 @@ import ReadMore from "../../components/ReadMore/ReadMore";
 import useGetCampaigns from "../../hooks/useGetCampaigns";
 import useContract from "../../hooks/useContract";
 import CommonButton from "../../components/CommonButton/CommonButton";
-
+import ConnectPlease from "../../components/ConnectPlease/ConnectPlease";
 const FundedCampaigns = () => {
-  const { account } = useMoralis();
+  const { account, isWeb3Enabled } = useMoralis();
 
   //States
   const [ids, setIds] = useState<null | number[]>(null);
   const [fundVals, setFundVals] = useState<null | string[]>(null);
-  // const { contract, abi, crowdFundAddress } = useContract();
   const contractData = useContract();
-  const campaigns = useGetCampaigns(
-    contractData?.contract,
-    contractData?.abi,
-    ids
-  );
+  const campaigns = useGetCampaigns(ids);
 
   //Contract Functions
   const { runContractFunction: claimRefund } = useWeb3Contract({
@@ -61,30 +58,40 @@ const FundedCampaigns = () => {
   }, [account]);
   return (
     <div className="m-3 md:w-3/5 md:mx-auto">
-      {campaigns?.map((c, i) => (
-        <div className="m-3 py-2 px-3 shadow-md" key={c.campaignHash}>
-          <CampaignCardData campaign={c} />
+      {isWeb3Enabled ? (
+        <>
+          {campaigns?.reverse().map((c, i) => (
+            <div className="m-3 py-2 px-3 shadow-md" key={nanoid()}>
+              <CampaignCardData campaign={c} />
 
-          <p className="text-green-500 uppercase">
-            <span>your funded amount:</span>
-            <span> {fundVals && fundVals[i]}</span>{" "}
-          </p>
-          <div className="flex items-center">
-            <CommonButton
-              text="Claim Refund"
-              variant="contained"
-              onClick={(e) => handleClaimRefund(c.campaignHash)}
-              disabled={c.goalAchieved}
-            />
-            <div className="ml-auto">
-              <ReadMore
-                campaignHash={c.campaignHash}
-                campaignTitle={c.campaignTitle}
-              />
+              <p>
+                <span className="capitalize">your fund amount:</span>
+                <span className="text-green-500 uppercase">
+                  {" "}
+                  {fundVals && fundVals[i]}
+                </span>{" "}
+              </p>
+
+              <div className="flex items-center">
+                <CommonButton
+                  text="Claim Refund"
+                  variant="contained"
+                  onClick={(e) => handleClaimRefund(c.campaignHash)}
+                  disabled={c.goalAchieved || c.isCampaignOpen}
+                />
+                <div className="ml-auto">
+                  <ReadMore
+                    campaignHash={c.campaignHash}
+                    campaignTitle={c.campaignTitle}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
+          ))}
+        </>
+      ) : (
+        <ConnectPlease />
+      )}
     </div>
   );
 };

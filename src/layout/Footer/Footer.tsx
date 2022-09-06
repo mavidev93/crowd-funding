@@ -11,7 +11,7 @@ import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import TelegramIcon from "@mui/icons-material/Telegram";
-
+import GitHubIcon from "@mui/icons-material/GitHub";
 //styles
 import "./Footer.scss";
 type Props = {};
@@ -22,7 +22,7 @@ const Footer = (props: Props) => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   };
   return (
@@ -44,6 +44,12 @@ const Footer = (props: Props) => {
             <IconButton onClick={handleScrollToTop}>
               <ArrowUpwardIcon className="text-white" />
             </IconButton>
+            <p>
+              Created With &hearts; By <br />{" "}
+              <Link to="https://github.com/mavidev93">
+                <GitHubIcon /> mavidev
+              </Link>{" "}
+            </p>
           </div>
           <ul className="order-first ">
             <li>

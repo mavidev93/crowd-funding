@@ -54,49 +54,57 @@ export async function getReadableCampaign(txCampaign: any) {
     totalAmountFunded,
     isOwnerWithdraw,
   }: any = txCampaign;
-  const campaignFromIpfs = await getCampaignFromIpfs(campaignHash);
-  const {
-    avatarImgPath,
-    campaignDescription,
-    campaignTitle,
-    fundingPeriodInDays,
-    goalAmount,
-    headerImgPath,
-    walletAddress,
-  }: any = campaignFromIpfs;
+  try {
+    const campaignFromIpfs = await getCampaignFromIpfs(campaignHash);
+    const {
+      avatarImgPath,
+      campaignDescription,
+      campaignTitle,
+      fundingPeriodInDays,
+      goalAmount,
+      headerImgPath,
+      walletAddress,
+    }: any = campaignFromIpfs;
 
-  const daysLeft = getDaysLeft(deadline);
-  const campaign = {
-    campaignHash,
-    campaignDescription,
-    campaignOwner,
-    daysLeft,
-    isCampaignOpen,
-    totalAmountFunded: bigNumberToString(totalAmountFunded),
-    avatarImgPath,
-    isExists,
-    campaignTitle,
-    fundingPeriodInDays,
-    goalAmount,
-    headerImgPath,
-    goalAchieved,
-    isOwnerWithdraw,
-  };
-  return campaign;
+    const daysLeft = getDaysLeft(deadline);
+    const campaign = {
+      campaignHash,
+      campaignDescription,
+      campaignOwner,
+      daysLeft,
+      isCampaignOpen,
+      totalAmountFunded: bigNumberToString(totalAmountFunded),
+      avatarImgPath,
+      isExists,
+      campaignTitle,
+      fundingPeriodInDays,
+      goalAmount,
+      headerImgPath,
+      goalAchieved,
+      isOwnerWithdraw,
+    };
+    return campaign;
+  } catch (e: any) {
+    console.error(e);
+    throw new Error(e.message);
+  }
 }
-type campaignData = { campaignHash: string; campaignTitle: string,dispatchNotification:Function};
+type CampaignData = {
+  campaignHash: string;
+  campaignTitle: string;
+  dispatchNotification: Function;
+};
 
 export const addCampaignToBookmarks = ({
   campaignTitle,
   campaignHash,
-  dispatchNotification
-}: campaignData) => {
-    const bookmarksLocal = localStorage.getItem("bookmarks");
-  console.log(bookmarksLocal)
-  console.log("add bookmark");
+  dispatchNotification,
+}: CampaignData) => {
+  const bookmarksLocal = localStorage.getItem("bookmarks");
+
   if (bookmarksLocal) {
-    const bookmarksArr = JSON.parse(bookmarksLocal)
-    const hashesArr = bookmarksArr.map((c:campaignData) => c.campaignHash);
+    const bookmarksArr = JSON.parse(bookmarksLocal);
+    const hashesArr = bookmarksArr.map((c: CampaignData) => c.campaignHash);
     if (hashesArr.includes(campaignHash)) {
       dispatchNotification({
         message: "campaign already bookmarked",
@@ -120,10 +128,5 @@ export const addCampaignToBookmarks = ({
       "bookmarks",
       JSON.stringify([{ campaignTitle, campaignHash }])
     );
-    // dispatchNotification({
-    //   message: "campaign  bookmarked",
-    //   position: "topR",
-    //   type: "success",
-    // });
   }
 };

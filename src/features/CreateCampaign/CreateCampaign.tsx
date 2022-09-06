@@ -40,10 +40,10 @@ const CreateCampaign = () => {
   // const {  abi, crowdFundAddress } = useContract();
   const contractData = useContract();
 
-  const { isWeb3Enabled, Moralis } = useMoralis();
+  const { isWeb3Enabled, Moralis, account } = useMoralis();
   const navigate = useNavigate();
   const dispatchNotification = useNotification();
-
+  const ethers = Moralis.web3Library;
   const {
     data,
     error,
@@ -51,9 +51,7 @@ const CreateCampaign = () => {
     isFetching,
   } = useWeb3Contract({
     abi: contractData?.abi || undefined,
-    contractAddress:
-      contractData?.crowdFundAddress ||
-      "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+    contractAddress: contractData?.crowdFundAddress || undefined,
     functionName: "createCampaign",
   });
 
@@ -98,6 +96,7 @@ const CreateCampaign = () => {
   //Handlers
   const handleSubmit = async (values: any, actions: any) => {
     try {
+      setIsLoading(true);
       if (!editorVal) throw "campaign description is empty";
     } catch (e) {
       typeof e === "string" &&
@@ -106,7 +105,6 @@ const CreateCampaign = () => {
       return;
     }
 
-    setIsLoading(true);
     let headerImgPath, avatarImgPath;
     if (imgCanvas) {
       const result = await sendCanvasToIpfs(imgCanvas, "header image");
@@ -141,8 +139,10 @@ const CreateCampaign = () => {
       headerImgPath,
       avatarImgPath,
     };
+
     try {
       const files = makeFileObjects(campaignObj, campaignTitle);
+
       const cid = await storeFiles(files);
 
       const path = `${cid}/${campaignTitle}`;
@@ -150,16 +150,18 @@ const CreateCampaign = () => {
       const handleSuccess = async (tx: any) => {
         actions.resetForm();
         await tx.wait(1);
-
+        setIsLoading(false);
         dispatchNotification({
           message: "Project Created Successfully!",
           type: "success",
           position: "topR",
         });
+
         navigate(`/campaigns/${campaignTitle}`, { state: { hash: path } });
       };
 
       const handleError = (error: any) => {
+        setIsLoading(false);
         dispatchNotification({
           message: "Project Creation Failed",
           type: "error",
@@ -174,22 +176,22 @@ const CreateCampaign = () => {
         onError(error) {
           handleError(error);
         },
+
         params: {
           params: {
             hash: path,
-            _goalAmount: goalAmount,
+            _goalAmount: Moralis.Units.ETH(goalAmount),
             _fundingPeriodInDays: fundingPeriodInDays,
           },
         },
       });
     } catch (e) {
+      setIsLoading(false);
       dispatchNotification({
         message: "Project Creation Failed",
         type: "error",
         position: "topR",
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -258,16 +260,18 @@ const CreateCampaign = () => {
               name="walletAddress"
               placeholder=""
               label="Creator Wallet Address"
-              validate={validateEthereumAddress}
+              value={account || undefined}
+              validate={() => validateEthereumAddress(account)}
+              disabled={true}
             />
             <div className="mb-4">
-              <label
+              {/* <label
                 htmlFor="cryptos"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
                 Select an option
-              </label>
-              <Field
+              </label> */}
+              {/* <Field
                 as="select"
                 name="cryptos"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -275,8 +279,12 @@ const CreateCampaign = () => {
                 <option value="red">ETH</option>
                 <option value="green">USDT</option>
                 <option value="blue">DAI</option>
-              </Field>
-              <TextInput name="goalAmount" label="Fund Amount" placeholder="" />
+              </Field> */}
+              <TextInput
+                name="goalAmount"
+                label="Goal Amount ETH"
+                placeholder=""
+              />
               <TextInput
                 name="fundingPeriodInDays"
                 label="Funding Period Days"

@@ -9,7 +9,9 @@ interface TextInputProps {
   className?: string;
   placeholder: string;
   validate?: (value: any) => string | undefined;
-  value?: string | null;
+  value?: string | number | readonly string[] ;
+  inputClassName?:string;
+  disabled?:boolean
 }
 
 const TextInput = ({
@@ -19,6 +21,8 @@ const TextInput = ({
   placeholder,
   validate,
   value,
+  inputClassName,
+  disabled
 }: TextInputProps) => {
   const [field, meta, helper] = useField({
     name,
@@ -28,7 +32,7 @@ const TextInput = ({
   });
 
   return (
-    <div className={"my-2 " + className}>
+    <div className={`my-2  + ${className}`}>
       {label && (
         <label
           htmlFor={name}
@@ -39,8 +43,10 @@ const TextInput = ({
       )}
       <div className="">
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${inputClassName}`}
           {...field}
+          value={value}
+        disabled={disabled}
         />
         <CustomError name={name} />
       </div>
