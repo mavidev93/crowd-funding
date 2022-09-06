@@ -13,8 +13,6 @@ import { NotificationProvider } from "web3uikit";
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 
-// const initializeOnMount = process.env.REACT_APP_INITIALIZE_ON_MOUNT;
-//
 root.render(
   <React.StrictMode>
     <StyledEngineProvider injectFirst>

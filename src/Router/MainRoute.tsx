@@ -1,10 +1,6 @@
 /** @format */
-
-//React
-import React, { lazy, Suspense, Fragment } from "react";
-
 //Third Party
-import { Routes, Route, Outlet } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import loadable from "@loadable/component";
 import { nanoid } from "nanoid";
 //Application
@@ -40,7 +36,6 @@ const CreatedCampaigns = loadable(
 );
 
 const roots = [
-  // { url: "/", component: Main },
   { url: "/create-campaign", component: CreateNewProject },
   { url: "/campaigns/:campaignTitle", component: SingleCampaignPage },
   { url: "/user/created-campaigns", component: CreatedCampaigns },

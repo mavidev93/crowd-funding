@@ -2,6 +2,7 @@
   "name": "crowd-funding",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://mavidev93.github.io/crowd-funding",
   "dependencies": {
     "@craco/craco": "^6.4.5",
     "@emotion/react": "^11.9.0",
@@ -42,6 +43,8 @@
     "yup": "^0.32.11"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "craco  --max_old_space_size=4096 start",
     "build": "craco  --max_old_space_size=4096 build ",
     "test": "craco test",
@@ -68,6 +71,7 @@
   "devDependencies": {
     "@tailwindcss/line-clamp": "^0.4.0",
     "autoprefixer": "^9",
+    "gh-pages": "^4.0.0",
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }

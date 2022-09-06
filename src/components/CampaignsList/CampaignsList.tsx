@@ -1,7 +1,4 @@
 /** @format */
-
-import React from "react";
-
 //App
 import CommonTitle from "../CommonTitle/CommonTitle";
 import CampaignCard from "../CampaignCard/CampaignCard";

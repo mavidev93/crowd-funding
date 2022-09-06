@@ -8,13 +8,9 @@ import { useWeb3Contract } from "react-moralis";
 import { getReadableCampaign } from "../helpers/helpers";
 import { abi } from "../constants";
 import useContract from "./useContract";
-export default function useGetCampaigns(
-  // contract: Contract | undefined,
-  ids: number[] | null
-) {
+export default function useGetCampaigns(ids: number[] | null) {
   //States
   const [campaigns, setCampaigns] = useState<Campaign[] | null>(null);
-  // const contractAddress = contract?.address || undefined;
   const contractData = useContract();
   const { runContractFunction: getCampaignByHash } = useWeb3Contract({
     abi: abi,
@@ -51,6 +47,10 @@ export default function useGetCampaigns(
       return;
     }
     const setCamps = async () => {
+      if (ids.length === 0) {
+        setCampaigns([]);
+        return;
+      }
       const campaigns = await getCampaigns(ids);
 
       campaigns && setCampaigns(campaigns);

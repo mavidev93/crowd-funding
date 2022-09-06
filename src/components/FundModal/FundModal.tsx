@@ -1,26 +1,22 @@
 /** @format */
 
 //React
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 
 //Third Party
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import InputLabel from "@mui/material/InputLabel";
 import InputBase from "@mui/material/InputBase";
-import TextField, { TextFieldProps } from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import { alpha, styled } from "@mui/material/styles";
 
-import { useMoralis, useMoralisFile, useWeb3Contract } from "react-moralis";
-import { Loading, useNotification } from "web3uikit";
+import { useMoralis,  useWeb3Contract } from "react-moralis";
+import {  useNotification } from "web3uikit";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import { useLocation } from "react-router-dom";
 //App
-import TextInput from "../TextInput/TextInput";
 import CommonButton from "../CommonButton/CommonButton";
 import { contractAddresses, abi } from "../../constants";
 import { getRecept } from "../../helpers/web3Helpers";
@@ -36,7 +32,6 @@ const style = {
 
   alignItems: "center",
   bgcolor: "background.paper",
-  // border: "2px solid #000",
 
   boxShadow: 24,
   p: 3,
@@ -86,7 +81,7 @@ export default function FundModal({ campaignHash, isCampaignOpen }: Props) {
   const handleClose = () => setOpen(false);
 
   const dispatchNotification = useNotification();
-  const { Moralis, isWeb3Enabled, chainId: chainIdHex } = useMoralis();
+  const { Moralis, chainId: chainIdHex } = useMoralis();
   const addresses: contractAddressesInterface = contractAddresses;
   const chainId: string = parseInt(chainIdHex!).toString();
   const crowdFundAddress =
@@ -96,7 +91,7 @@ export default function FundModal({ campaignHash, isCampaignOpen }: Props) {
     setFundVal(event.currentTarget.value);
   };
 
-  const { runContractFunction: fundCampaign, error } = useWeb3Contract({
+  const { runContractFunction: fundCampaign } = useWeb3Contract({
     abi: abi,
     contractAddress: crowdFundAddress!,
     functionName: "fundCampaign",
@@ -148,8 +143,6 @@ export default function FundModal({ campaignHash, isCampaignOpen }: Props) {
       <Modal
         open={open}
         onClose={handleClose}
-        // aria-labelledby="modal-modal-title"
-        // aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <Typography

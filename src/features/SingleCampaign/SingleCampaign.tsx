@@ -18,10 +18,9 @@ import useContract from "../../hooks/useContract";
 import { createUrl, getReadableCampaign } from "../../helpers/helpers";
 import FundModal from "../../components/FundModal/FundModal";
 import CommonDivider from "../../components/CommonDivider/CommonDivider";
-type Props = {};
 
 //Component
-const SingleCampaign = (props: Props) => {
+const SingleCampaign = () => {
   //States
   const [campaign, setCampaign] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
@@ -38,16 +37,17 @@ const SingleCampaign = (props: Props) => {
     functionName: "getCampaignByHash",
   });
   const location: any = useLocation();
+  const campaignHash = location.state.hash;
   //Effects
   useEffect(() => {
     if (!isWeb3Enabled) return;
     getCampaign();
-  }, [isWeb3Enabled]);
+  }, [isWeb3Enabled,campaignHash]);
 
   async function getCampaign() {
     setError(null);
     try {
-      const hash = location.state.hash;
+      const hash = campaignHash
       if (!hash) return;
       const handleSuccess = async (txCampaign: any) => {
         try {

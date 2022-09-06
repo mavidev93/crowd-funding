@@ -11,7 +11,6 @@ import { useNotification } from "web3uikit";
 type CampaignData = {
   campaignHash: string;
   campaignTitle: string;
-  // dispatchNotification: Function;
 };
 
 type Action = { type: "add"; payload: CampaignData } | { type: "remove" };
@@ -46,7 +45,6 @@ function bookmarkReducer(state: State, action: Action) {
 
     default: {
       return state;
-      throw new Error("action is't recognized");
     }
   }
 }

@@ -25,15 +25,6 @@ export interface navItem {
 const sharedClasses = "pl-0 md:pl-5 capitalize font-bold text-sm	";
 
 const navItemsRight: navItem[] = [
-  // {
-  //   // REFACTOR and add bookmark notification MAYBE
-
-  //   id: nanoid(),
-  //   component: <BookmarkBorder className="text-tx-black  " />,
-  //   classNames: `order-12 ${sharedClasses} `,
-  //   root: "/bookmarks",
-  // },
-
   {
     id: nanoid(),
     component: <ConnectButton moralisAuth={false} />,

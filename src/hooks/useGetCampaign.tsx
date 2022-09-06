@@ -7,12 +7,6 @@ import { useWeb3Contract } from "react-moralis";
 //App
 import { getReadableCampaign } from "../helpers/helpers";
 
-type Props = {
-  contractAddress: string | undefined;
-  campaignHash?: string;
-  campaignId?: number;
-};
-
 export default function useGetCampaign(
   contractAddress: string | undefined,
   campaignHash?: string,

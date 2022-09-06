@@ -109,7 +109,7 @@ function ImageCrop({
   //Effects
   useEffect(() => {
     setCanvas && setCanvas(previewCanvasRef.current);
-  }, [completedCrop]);
+  }, [completedCrop?.width,completedCrop?.height]);
 
   return (
     <div className="">

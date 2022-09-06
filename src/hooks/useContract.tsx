@@ -1,21 +1,18 @@
 /** @format */
 
-import React, { useEffect, useState, useMemo } from "react";
+import {  useMemo } from "react";
 
 //Third Party
 import { useMoralis } from "react-moralis";
 import { contractAddresses, abi } from "../constants";
 
-type Props = {};
 interface contractAddressesInterface {
   [key: string]: string[];
 }
 
 const useContract = () => {
   //get contract and contract address
-
-  const { chainId: chainIdHex, Moralis, account, isWeb3Enabled } = useMoralis();
-
+  const { chainId: chainIdHex, Moralis, isWeb3Enabled } = useMoralis();
   const createContractData = (chainIdHex: string | null) => {
     if (!chainIdHex || !isWeb3Enabled) return null;
     const ethers = Moralis.web3Library;
@@ -23,9 +20,6 @@ const useContract = () => {
 
     const addresses: contractAddressesInterface = contractAddresses;
     const chainId: string = parseInt(chainIdHex!).toString();
-
-    // if(!chainId)return {contract:"", crowdFundAddress:"", abi:{}}
-
     const crowdFundAddress =
       chainId in contractAddresses ? addresses[chainId][0] : undefined;
     //@ts-ignore

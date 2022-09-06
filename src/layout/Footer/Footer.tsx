@@ -1,7 +1,4 @@
 /** @format */
-
-//React
-import { useEffect } from "react";
 //Third Party
 import { Link } from "react-router-dom";
 

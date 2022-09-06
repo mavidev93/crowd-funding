@@ -1,10 +1,7 @@
 /** @format */
-
-import React from "react";
-
 //App
 import CommonTitle from "../../components/CommonTitle/CommonTitle";
-import ReadMore from "../../components/ReadMore/ReadMore";
+// import ReadMore from "../../components/ReadMore/ReadMore";
 type Props = {
   title: string;
   text: string;

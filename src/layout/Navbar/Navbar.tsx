@@ -11,13 +11,11 @@ import {
   navItemsLeft,
   navItem,
 } from "./Navbar.static";
-// import { ReactComponent as CrowdFundingLogo } from "../../assets/images/CROWD-FUNDING-logo.svg";
-// import { ConnectButton } from "web3uikit";
 import { useBookmark } from "../../contexts/bookmark-context";
 import CellPhoneNav from "./CellPhoneNav";
 function Navbar() {
   const { bookmark } = useBookmark();
-
+  
   //Create JSX
   const createNavList = (navItems: navItem[]) => {
     return navItems.map((item) => (

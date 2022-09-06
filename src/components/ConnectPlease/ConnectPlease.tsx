@@ -1,5 +1,5 @@
 //Third Party
-import { ConnectButton, useNotification } from "web3uikit";
+import { ConnectButton} from "web3uikit";
 
 
 

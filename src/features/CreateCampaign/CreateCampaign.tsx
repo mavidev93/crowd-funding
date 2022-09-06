@@ -1,9 +1,9 @@
 /** @format */
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 //Third party
-import { Formik, Form, Field } from "formik";
-import { useMoralis, useMoralisFile, useWeb3Contract } from "react-moralis";
+import { Formik, Form } from "formik";
+import { useMoralis,  useWeb3Contract } from "react-moralis";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
@@ -43,12 +43,8 @@ const CreateCampaign = () => {
   const { isWeb3Enabled, Moralis, account } = useMoralis();
   const navigate = useNavigate();
   const dispatchNotification = useNotification();
-  const ethers = Moralis.web3Library;
   const {
-    data,
-    error,
     runContractFunction: createCampaign,
-    isFetching,
   } = useWeb3Contract({
     abi: contractData?.abi || undefined,
     contractAddress: contractData?.crowdFundAddress || undefined,
@@ -65,7 +61,6 @@ const CreateCampaign = () => {
 
   async function storeFiles(files: any) {
     const cid = await client.put(files);
-
     return cid;
   }
 

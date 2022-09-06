@@ -1,20 +1,15 @@
 /** @format */
-//React
-import { useState, useEffect, useContext } from "react";
 //Third Party
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Skeleton from "@mui/material/Skeleton";
 import ReactMarkdown from "react-markdown";
 
 //App
-import CommonButton from "../../components/CommonButton/CommonButton";
 import CommonTitle from "../../components/CommonTitle/CommonTitle";
-import useGetCampaign from "../../hooks/useGetCampaign";
 import useContract from "../../hooks/useContract";
 import ReadMore from "../../components/ReadMore/ReadMore";
 import { createUrl } from "../../helpers/helpers";
@@ -22,10 +17,8 @@ import { featuredHash, featuredImgPHSrc } from "../../constants";
 import { featuredCampaign } from "../../constants/staticCampaigns";
 //Constants
 const imgSrc = featuredImgPHSrc;
-const campaignHash = featuredHash;
 
 export default function FeaturedCampaign() {
-  const contract = useContract();
   const featured = featuredCampaign;
 
   return (

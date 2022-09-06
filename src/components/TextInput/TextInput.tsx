@@ -3,7 +3,6 @@
 import { useField } from "formik";
 import CustomError from "../CustomError/CustomError";
 interface TextInputProps {
-  // config : FieldHookConfig<T>;
   label: string;
   name: string;
   className?: string;

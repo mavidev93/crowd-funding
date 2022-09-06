@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 //Third Party
 import { useMoralis, useWeb3Contract } from "react-moralis";
 import { nanoid } from "nanoid";
-import Tooltip from "@mui/material/Tooltip";
 
 //App
 import CampaignCardData from "../../components/CampaignCardData/CampaignCardData";
@@ -34,7 +33,7 @@ const FundedCampaigns = () => {
 
   const handleClaimRefund = async (hash: string) => {
     try {
-      const tx = await claimRefund({ params: { params: { hash } } });
+      await claimRefund({ params: { params: { hash } } });
     } catch (e) {}
   };
 
@@ -60,7 +59,9 @@ const FundedCampaigns = () => {
     <div className="m-3 md:w-3/5 md:mx-auto">
       {isWeb3Enabled ? (
         <>
-          {campaigns?.reverse().map((c, i) => (
+          {campaigns?
+          campaigns.length?
+          [...campaigns].reverse().map((c, i) => (
             <div className="m-3 py-2 px-3 shadow-md" key={nanoid()}>
               <CampaignCardData campaign={c} />
 
@@ -87,7 +88,7 @@ const FundedCampaigns = () => {
                 </div>
               </div>
             </div>
-          ))}
+          )):<p>No Campaign Found!</p>:null}
         </>
       ) : (
         <ConnectPlease />

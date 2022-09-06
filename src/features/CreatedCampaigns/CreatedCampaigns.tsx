@@ -13,13 +13,9 @@ import CommonButton from "../../components/CommonButton/CommonButton";
 import CampaignCardData from "../../components/CampaignCardData/CampaignCardData";
 import ReadMore from "../../components/ReadMore/ReadMore";
 import ConnectPlease from "../../components/ConnectPlease/ConnectPlease";
-//interface
-interface contractAddressesInterface {
-  [key: string]: string[];
-}
-type Props = {};
 
-const CreatedCampaigns = (props: Props) => {
+
+const CreatedCampaigns = () => {
   const { account, isWeb3Enabled } = useMoralis();
 
   //States
@@ -43,12 +39,12 @@ const CreatedCampaigns = (props: Props) => {
 
   //Handlers
   const handleWithdraw = async (hash: any) => {
-    const tx = await withdrawFunds({ params: { params: { hash: hash } } });
+     await withdrawFunds({ params: { params: { hash: hash } } });
   };
 
   const handleCloseCampaign = async (hash: string) => {
     try {
-      const tx = await closeCampaign({ params: { params: { hash: hash } } });
+       await closeCampaign({ params: { params: { hash: hash } } });
     } catch (e) {}
   };
 
@@ -68,9 +64,9 @@ const CreatedCampaigns = (props: Props) => {
     <div className="m-3 md:w-3/5 md:mx-auto">
       {isWeb3Enabled ? (
         <>
-          {campaigns &&
-            //get recently created campaigns first
-            campaigns.reverse().map((c) => (
+          {campaigns ?
+            //check user with zero campaigns and get recently created campaigns first
+       campaigns.length?  [...campaigns].reverse().map((c) => (
               <div className="m-3 py-2 px-3 shadow-md" key={c.campaignHash}>
                 <CampaignCardData campaign={c} />
 
@@ -98,7 +94,7 @@ const CreatedCampaigns = (props: Props) => {
                   </div>
                 </div>
               </div>
-            ))}
+            )):<p>No Campaign Found!</p>:null}
         </>
       ) : (
         <ConnectPlease />

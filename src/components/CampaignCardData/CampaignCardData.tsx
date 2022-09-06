@@ -8,9 +8,7 @@ import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 
 //App
 import DaysLeft from "../DaysLeft/DaysLeft";
@@ -34,8 +32,6 @@ const CampaignCardData = ({ campaign }: Props) => {
     goalAmount,
     headerImgPath,
     avatarImgPath,
-    isLiked,
-    isDisliked,
   } = campaign;
   return (
     <div>
@@ -81,7 +77,7 @@ const CampaignCardData = ({ campaign }: Props) => {
           <DaysLeft daysLeft={daysLeft} />
         </div>
         <CommonDivider className="my-3" />
-  
+
     </div>
   );
 };

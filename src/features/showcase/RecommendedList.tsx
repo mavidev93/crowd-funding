@@ -1,20 +1,15 @@
 /** @format */
 //React
-import { useState, useEffect } from "react";
 //Third Party
-import { nanoid } from "nanoid";
 import { Skeleton } from "@mui/material";
 
 //App
 import CommonTitle from "../../components/CommonTitle/CommonTitle";
 import SingleRecommend from "./SingleRecommend";
-import { recommendedIdes } from "../../constants";
 import {recommended} from '../../constants/staticCampaigns'
-type Props = {};
 
 export default function RecommendedList() {
   const recommendations =recommended
-
   return (
     <div>
       <CommonTitle

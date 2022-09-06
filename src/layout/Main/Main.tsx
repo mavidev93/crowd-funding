@@ -3,7 +3,6 @@
 //Application
 import MainTitle from "./MainTitle";
 import Showcase from "../../features/showcase/Showcase";
-import HottestProjects from "../../features/HottestProjects/HottestProjects";
 import FeaturesCarousel from "../../features/FeaturesCarousel/FeaturesCarousel";
 import FreshFavorites from "../../features/FreshFavorites/FreshFavorites";
 
@@ -12,9 +11,6 @@ function Main() {
     <section className="mx-auto px-3 md:max-w-screen-xl ">
       <MainTitle />
       <Showcase />
-      {/* <HottestProjects />
-
-      <NewestProjects/> */}
       <FreshFavorites />
       <FeaturesCarousel  />
 

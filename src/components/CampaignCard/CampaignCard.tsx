@@ -1,11 +1,8 @@
 /** @format */
-
 //Third Party
 import { BookmarkAddOutlined } from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import ReactMarkdown from "react-markdown";
-import { useNotification } from "web3uikit";
-import BookmarkOutlinedIcon from "@mui/icons-material/BookmarkOutlined";
 //App
 import CommonTitle from "../CommonTitle/CommonTitle";
 import ReadMore from "../../components/ReadMore/ReadMore";
@@ -38,7 +35,7 @@ const CampaignCard = ({ campaignIpfs }: Props) => {
     return (
       <div className="flex   w-full">
         <div className=" 	flex items-center pr-3	w-1/6">
-          <img src={avatarImgPath && createUrl(avatarImgPath)} />
+          <img src={avatarImgPath && createUrl(avatarImgPath)} alt={campaignTitle} />
           <CommonDivider orientation="vertical" className="mx-2 " />
         </div>
         <div className="w-5/6	 pl-2 flex flex-col ">
