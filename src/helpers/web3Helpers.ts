@@ -1,6 +1,8 @@
 /** @format */
 import { Contract } from "ethers";
-import {  bigNumberToString } from "./helpers";
+import { bigNumberToString } from "./helpers";
+import { filterStartBlock } from "../constants";
+
 export const getRecept = async (tx: any) => {
   const txRecept = await tx.wait(1);
   return txRecept;
@@ -12,10 +14,9 @@ export const getCampaignDataOfFunder = async (
 ) => {
   const fundFilter = contract.filters.Fund(funder, null);
   try {
-    const fundEvents = await contract.queryFilter(fundFilter, 0);
+    const fundEvents = await contract.queryFilter(fundFilter, filterStartBlock);
     //when user not fund and campaign
-    if(fundEvents.length ===0)
-    return []
+    if (fundEvents.length === 0) return [];
     const campaignsData = fundEvents.map((event) => {
       return {
         value: bigNumberToString(event.topics[2]),
@@ -32,9 +33,12 @@ export const getCampaignIdOfCreator = async (
 ) => {
   const createFilter = contract.filters.Create(creator, null);
   try {
-    const createEvents = await contract.queryFilter(createFilter, 0);
+    const createEvents = await contract.queryFilter(
+      createFilter,
+      filterStartBlock
+    );
     //when user got notCreated any Campaign
-    if(createEvents.length ===0) return []
+    if (createEvents.length === 0) return [];
     const ids = createEvents.map((event) => parseInt(event.topics[2]));
     return ids;
   } catch (e) {}
